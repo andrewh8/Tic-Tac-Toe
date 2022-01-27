@@ -18,11 +18,17 @@ for (let i = 0; i < 3; i++){
     gameBoard.push([]);
     let row = document.createElement('div');
     row.classList.add('row');
+    if (i === 0 || i === 1){
+        row.classList.add('rowBorder');
+    }
     board.appendChild(row);
     for (let j = 0; j < 3; j++){
         gameBoard[i].push('');
         let cell = document.createElement('div');
         cell.classList.add('cell');
+        if (j === 0 || j === 1){
+            cell.classList.add('cellBorder');
+        }
         cell.addEventListener('click', () => {
             if (gameOver === false && gameBoard[i][j] === ''){
                 // set the marker based on which player's turn it is
