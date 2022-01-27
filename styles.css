@@ -6,8 +6,15 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin: 0px;
+}
+
+.header {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 40px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .main {
@@ -32,8 +39,8 @@ body {
 }
 
 .cell {
-    width: 150px;
-    height: 150px;
+    width: 125px;
+    height: 125px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,9 +56,32 @@ body {
 }
 
 .rowBorder {
-    border-bottom: 5px solid black;
+    border-bottom: 8px solid black;
 }
 
 .cellBorder {
-    border-right: 5px solid black;
+    border-right: 8px solid black;
+}
+
+.score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    font-size: 20px;
+}
+
+.players {
+    display: flex;
+    gap: 50px;
+    text-align: center;
+    font-size: 30px;
+}
+
+.result {
+    height: 40px;
+    color: red;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }

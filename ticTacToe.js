@@ -1,9 +1,10 @@
 
-// initialize X as the starting player
+// initialize variables
 let turn = 'O';
 let winner = '';
 let gameOver = false;
 let counter = 0;
+let result = document.querySelector('.result');
 
 // intialize gameBoard array
 let gameBoard = [];
@@ -51,29 +52,29 @@ for (let i = 0; i < 3; i++){
 function checkWin(i, j){
     // check current row and column
     if (gameBoard[i][0]=== turn && gameBoard[i][1]=== turn && gameBoard[i][2]=== turn){
-        alert(`${winner} Wins!`);
+        result.textContent = `${winner} Wins!`;
         gameOver = true;
     }
     if (gameBoard[0][j]=== turn && gameBoard[1][j]=== turn && gameBoard[2][j]=== turn){
-        alert(`${winner} Wins!`)
+        result.textContent = `${winner} Wins!`;
         gameOver = true;
     }
     // check diagonals
     if ((i === 0 && j === 0) || (i === 1 && j === 1) || (i === 2 && j === 2)){
         if (gameBoard[0][0] === turn && gameBoard[1][1] === turn && gameBoard[2][2] === turn){
-            alert(`${winner} Wins!`)
+            result.textContent = `${winner} Wins!`;
             gameOver = true;
         }
     }
     if ((i === 2 && j === 0) || (i === 1 && j === 1) || (i === 0 && j === 2)){
         if (gameBoard[2][0] === turn && gameBoard[1][1] === turn && gameBoard[0][2] === turn){
-            alert(`${winner} Wins!`)
+            result.textContent = `${winner} Wins!`;
             gameOver = true;
         }
     }
     if (counter === 9 && gameOver === false) {
         gameOver = true;
-        alert('It\'s a tie!');
+        result.textContent = 'It\'s a tie!';
     }
 }
 
@@ -103,3 +104,10 @@ const playerTwo = {
     marker: 'O',
     name: 'Player Two'
 }
+
+// create reset button functionality after code is cleaned up
+// reset game if reset button is pressed
+/*const reset = document.querySelector('.reset');
+reset.addEventListener('click', () => {
+    
+})*/
