@@ -4,82 +4,26 @@ html {
 
 body {
     height: 100%;
+    margin: 0px;
     display: flex;
     flex-direction: column;
-    margin: 0px;
-}
-
-.header {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 40px;
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.main {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin: 0px;
+    justify-content: center;
 }
 
 .board {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    flex: 1;
-}
-
-.row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    height: 300px;
+    width: 300px;
+    background-color: rgba(67, 67, 179, 0.616);
+    border: 1px solid black;
 }
 
 .cell {
-    width: 125px;
-    height: 125px;
+    height: 100px;
+    width: 100px;
+    font-size: 40px;
+    float: left;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 100px;
-}
-
-.score {
-    flex: 1;
-}
-
-.space {
-    flex: 1;
-}
-
-.rowBorder {
-    border-bottom: 8px solid black;
-}
-
-.cellBorder {
-    border-right: 8px solid black;
-}
-
-.score {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    font-size: 30px;
-}
-
-.players {
-    display: flex;
-    gap: 20px;
-    text-align: center;
-}
-
-.result {
-    height: 40px;
-    color: red;
-    font-weight: bold;
-    margin-bottom: 20px;
 }
