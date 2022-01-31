@@ -1,6 +1,6 @@
 
 // factory to create objects for each player
-const playerFactory = (name, marker) => {
+const createPlayerObject = (name, marker) => {
     return { name, marker}
 }
 
@@ -9,20 +9,20 @@ const playerFactory = (name, marker) => {
 const gameBoard = (() => {
 
     // initialize the gameBoard array
-    const boardArray = ['','','','','','','','',''];
+    const gameBoardArray = ['','','','','','','','',''];
 
     // cache the DOM
-    let board = document.querySelector('.board');
-    let reset = document.querySelector('.reset');
+    let gameBoard = document.querySelector('.board');
+    let resetButton = document.querySelector('.reset');
 
     // bind events
-    board.addEventListener('click', _updateArray);
-    reset.addEventListener('click', _resetGameBoard);
+    gameBoard.addEventListener('click', _updateArray);
+    resetButton.addEventListener('click', _resetGameBoard);
 
     // reset game if reset button is clicked
     function _resetGameBoard(){
-        for (let i = 0; i < boardArray.length; i++){
-            boardArray[i] = '';
+        for (let i = 0; i < gameBoardArray.length; i++){
+            gameBoardArray[i] = '';
         }
         displayController.updateDisplay();
         gameController.resetGameControls();
@@ -30,18 +30,19 @@ const gameBoard = (() => {
 
     // if game isn't over and target array index is empty, fill index with current player, switch players, and update display
     function _updateArray(e){
-        if (gameController.gameStatus() !== 'over' && boardArray[e.target.id] === "") {
-            boardArray[e.target.id] = gameController.currentPlayer().marker;
-            gameController.switchPlayer();
+        if (gameController.gameStatus() !== 'over' && gameBoardArray[e.target.id] === "") {
+            gameBoardArray[e.target.id] = gameController.getCurrentPlayer().marker;
             displayController.updateDisplay();
+            gameController.gameStatus();
+            gameController.switchPlayer();
         } else {
             return;
         }
     }
 
-    // store boardArray in a function for public use
+    // store gameBoardArray in a function for public use
     function publicArray(){
-        return boardArray;
+        return gameBoardArray;
     }
 
     return { publicArray };
@@ -52,9 +53,24 @@ const gameBoard = (() => {
 const displayController = (() => {
 
     // cache the DOM
+    let winner = document.querySelector('.winner');
     let cells = [];
     for (let i = 0; i < gameBoard.publicArray().length; i++){
         cells[i] = document.getElementById(`${i}`)
+    }
+    
+    // display winner
+    function displayWinner(){
+        winner.textContent = `${gameController.getCurrentPlayer().name} Wins!`;
+    }
+
+    function tieGame(){
+        winner.textContent = 'Tie!';
+    }
+
+    // remove winner display
+    function resetWinner(){
+        winner.textContent = '';
     }
 
     // update the display to match the Game Board array each time the array is updated
@@ -64,7 +80,7 @@ const displayController = (() => {
         }
     }
 
-    return { updateDisplay }
+    return { updateDisplay, displayWinner, resetWinner, tieGame }
 
 })()
     
@@ -74,21 +90,23 @@ const displayController = (() => {
 const gameController = (() => {
 
     // initialize players
-    let playerX = playerFactory('Player X', 'X');
-    let playerO = playerFactory('Player O', 'O');
+    let playerX = createPlayerObject('Player X', 'X');
+    let playerO = createPlayerObject('Player O', 'O');
 
     // initialize game state
     let gameState = 'not over';
+    let gameRound = 0;
 
     // initialize the current player as X
     let player = playerX;
 
     // output the current player
-    function currentPlayer(){
+    function getCurrentPlayer(){
+        gameRound++;
         return player;
     }
 
-    // switch players each time the currentPlayer function is called
+    // switch players each time the switchPlayer function is called
     function switchPlayer(){
         if (player === playerX){
             player = playerO;
@@ -99,17 +117,62 @@ const gameController = (() => {
     }
 
     // check to see if the current player won each time the array is updated
-    function gameStatus() { ///////////////////////////////////////////////////////////////////////////////////////
-        gameState = 'not over';
+    function gameStatus() {
+        if (gameBoard.publicArray()[0] === player.marker && gameBoard.publicArray()[1] === player.marker 
+            && gameBoard.publicArray()[2] === player.marker){
+                gameState = 'over';
+                displayController.displayWinner();
+            }
+        if (gameBoard.publicArray()[3] === player.marker && gameBoard.publicArray()[4] === player.marker 
+        && gameBoard.publicArray()[5] === player.marker){
+            gameState = 'over';
+            displayController.displayWinner();
+        }
+        if (gameBoard.publicArray()[6] === player.marker && gameBoard.publicArray()[7] === player.marker 
+        && gameBoard.publicArray()[8] === player.marker){
+            gameState = 'over';
+            displayController.displayWinner();
+        }
+        if (gameBoard.publicArray()[0] === player.marker && gameBoard.publicArray()[3] === player.marker 
+        && gameBoard.publicArray()[6] === player.marker){
+            gameState = 'over';
+            displayController.displayWinner();
+        }
+        if (gameBoard.publicArray()[1] === player.marker && gameBoard.publicArray()[4] === player.marker 
+        && gameBoard.publicArray()[7] === player.marker){
+            gameState = 'over';
+            displayController.displayWinner();
+        }
+        if (gameBoard.publicArray()[2] === player.marker && gameBoard.publicArray()[5] === player.marker 
+        && gameBoard.publicArray()[8] === player.marker){
+            gameState = 'over';
+            displayController.displayWinner();
+        }
+        if (gameBoard.publicArray()[0] === player.marker && gameBoard.publicArray()[4] === player.marker 
+        && gameBoard.publicArray()[8] === player.marker){
+            gameState = 'over';
+            displayController.displayWinner();
+        }
+        if (gameBoard.publicArray()[6] === player.marker && gameBoard.publicArray()[4] === player.marker 
+        && gameBoard.publicArray()[2] === player.marker){
+            gameState = 'over';
+            displayController.displayWinner();
+        } else if (gameState = 'not over' && gameRound === 9){
+            gameState = 'over';
+            displayController.tieGame();
+        }
+            
         return gameState;
     }
 
     // reset game when reset button is clicked
     function resetGameControls(){
         player = playerX;
+        gameRound = 0;
         gameState = 'not over';
+        displayController.resetWinner();
     }
 
-    return { currentPlayer, switchPlayer, gameStatus, resetGameControls }
+    return { getCurrentPlayer, switchPlayer, gameStatus, resetGameControls }
 
 })()

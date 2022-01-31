@@ -12,7 +12,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 main {
@@ -20,6 +20,12 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.winner {
+    height: 30px;
+    font-size: 30px;
+    margin-bottom: 20px;
 }
 
 .board {
@@ -38,4 +44,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.cell:hover {
+    background-color: rgba(115, 115, 224, 0.616);
 }
