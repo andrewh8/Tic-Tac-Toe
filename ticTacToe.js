@@ -11,13 +11,22 @@ const gameBoard = (() => {
     // initialize the gameBoard array
     const boardArray = ['','','','','','','','',''];
 
-    // reset button //////////////////////////////////////////////////////////
-
     // cache the DOM
     let board = document.querySelector('.board');
+    let reset = document.querySelector('.reset');
 
     // bind events
     board.addEventListener('click', _updateArray);
+    reset.addEventListener('click', _resetGameBoard);
+
+    // reset game if reset button is clicked
+    function _resetGameBoard(){
+        for (let i = 0; i < boardArray.length; i++){
+            boardArray[i] = '';
+        }
+        displayController.updateDisplay();
+        gameController.resetGameControls();
+    }
 
     // if game isn't over and target array index is empty, fill index with current player, switch players, and update display
     function _updateArray(e){
@@ -68,6 +77,9 @@ const gameController = (() => {
     let playerX = playerFactory('Player X', 'X');
     let playerO = playerFactory('Player O', 'O');
 
+    // initialize game state
+    let gameState = 'not over';
+
     // initialize the current player as X
     let player = playerX;
 
@@ -86,19 +98,18 @@ const gameController = (() => {
         return player;
     }
 
-
     // check to see if the current player won each time the array is updated
+    function gameStatus() { ///////////////////////////////////////////////////////////////////////////////////////
+        gameState = 'not over';
+        return gameState;
+    }
 
-    // pass game status to the Game Board, to stop cells from being clicked after game is over
-    function gameStatus() { /////////////////////////////////////////////////////////////////////////
-        return 'notOver';
-    } ///////////////////////////////////////////////////////////////////////////////////////////////
+    // reset game when reset button is clicked
+    function resetGameControls(){
+        player = playerX;
+        gameState = 'not over';
+    }
 
-    // if player wins, tell Display Controller to display the winner
-
-    // if reset button is clicked, reset the game and tell Game Board to re-initialize
-
-
-    return { currentPlayer, switchPlayer, gameStatus }
+    return { currentPlayer, switchPlayer, gameStatus, resetGameControls }
 
 })()

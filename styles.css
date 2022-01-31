@@ -4,7 +4,18 @@ html {
 
 body {
     height: 100%;
-    margin: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+main {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,6 +27,7 @@ body {
     width: 300px;
     background-color: rgba(67, 67, 179, 0.616);
     border: 1px solid black;
+    margin-bottom: 20px;
 }
 
 .cell {
